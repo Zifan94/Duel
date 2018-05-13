@@ -211,7 +211,7 @@ class GameScene: SKScene {
     }
     
     func rightDash() {
-        let dashDistance = CGFloat(4)
+        let dashDistance = CGFloat(8)
         let timeWindow = 2
         if timeflag % timeWindow != 0 {
             timeflag += 1
