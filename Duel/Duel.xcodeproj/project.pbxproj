@@ -24,7 +24,11 @@
 		DC6296CB20A8A418006DD1B1 /* defense1.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6296C820A8A417006DD1B1 /* defense1.png */; };
 		DC6296CC20A8A418006DD1B1 /* defense2.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6296C920A8A417006DD1B1 /* defense2.png */; };
 		DC6296CD20A8A418006DD1B1 /* defense3.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6296CA20A8A418006DD1B1 /* defense3.png */; };
-		DC6296D120A8AF4E006DD1B1 /* AI.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6296D020A8AF4E006DD1B1 /* AI.png */; };
+		DC6296E120A93E9B006DD1B1 /* AIplayer.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6296DC20A93E9A006DD1B1 /* AIplayer.png */; };
+		DC6296E220A93E9B006DD1B1 /* AIdefense3.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6296DD20A93E9A006DD1B1 /* AIdefense3.png */; };
+		DC6296E320A93E9B006DD1B1 /* AIrightdash.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6296DE20A93E9A006DD1B1 /* AIrightdash.png */; };
+		DC6296E420A93E9B006DD1B1 /* AIdefense1.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6296DF20A93E9A006DD1B1 /* AIdefense1.png */; };
+		DC6296E520A93E9B006DD1B1 /* AIdefense2.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6296E020A93E9B006DD1B1 /* AIdefense2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,7 +72,11 @@
 		DC6296C820A8A417006DD1B1 /* defense1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defense1.png; sourceTree = "<group>"; };
 		DC6296C920A8A417006DD1B1 /* defense2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defense2.png; sourceTree = "<group>"; };
 		DC6296CA20A8A418006DD1B1 /* defense3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defense3.png; sourceTree = "<group>"; };
-		DC6296D020A8AF4E006DD1B1 /* AI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AI.png; sourceTree = "<group>"; };
+		DC6296DC20A93E9A006DD1B1 /* AIplayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AIplayer.png; sourceTree = "<group>"; };
+		DC6296DD20A93E9A006DD1B1 /* AIdefense3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AIdefense3.png; sourceTree = "<group>"; };
+		DC6296DE20A93E9A006DD1B1 /* AIrightdash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AIrightdash.png; sourceTree = "<group>"; };
+		DC6296DF20A93E9A006DD1B1 /* AIdefense1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AIdefense1.png; sourceTree = "<group>"; };
+		DC6296E020A93E9B006DD1B1 /* AIdefense2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AIdefense2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,9 +163,13 @@
 			children = (
 				DC6296B620A7DA6C006DD1B1 /* foreground.png */,
 				DC6296BA20A7EE6A006DD1B1 /* prepare.png */,
+				DC6296DF20A93E9A006DD1B1 /* AIdefense1.png */,
+				DC6296E020A93E9B006DD1B1 /* AIdefense2.png */,
+				DC6296DD20A93E9A006DD1B1 /* AIdefense3.png */,
+				DC6296DC20A93E9A006DD1B1 /* AIplayer.png */,
+				DC6296DE20A93E9A006DD1B1 /* AIrightdash.png */,
 				DC6296BB20A7EE6A006DD1B1 /* rightdash.png */,
 				DC6296C820A8A417006DD1B1 /* defense1.png */,
-				DC6296D020A8AF4E006DD1B1 /* AI.png */,
 				DC6296C920A8A417006DD1B1 /* defense2.png */,
 				DC6296CA20A8A418006DD1B1 /* defense3.png */,
 				DC6296B820A7DB85006DD1B1 /* background.png */,
@@ -273,7 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC6296D120A8AF4E006DD1B1 /* AI.png in Resources */,
+				DC6296E420A93E9B006DD1B1 /* AIdefense1.png in Resources */,
 				DC6296B420A7D8DC006DD1B1 /* player.png in Resources */,
 				DC6296B720A7DA6C006DD1B1 /* foreground.png in Resources */,
 				DC6296CB20A8A418006DD1B1 /* defense1.png in Resources */,
@@ -281,10 +293,14 @@
 				DC6296CD20A8A418006DD1B1 /* defense3.png in Resources */,
 				DC6296BD20A7EE6B006DD1B1 /* rightdash.png in Resources */,
 				DC62968720A7BCB0006DD1B1 /* Main.storyboard in Resources */,
+				DC6296E120A93E9B006DD1B1 /* AIplayer.png in Resources */,
 				DC62968920A7BCB0006DD1B1 /* Assets.xcassets in Resources */,
+				DC6296E520A93E9B006DD1B1 /* AIdefense2.png in Resources */,
+				DC6296E320A93E9B006DD1B1 /* AIrightdash.png in Resources */,
 				DC6296BC20A7EE6B006DD1B1 /* prepare.png in Resources */,
 				DC62968C20A7BCB0006DD1B1 /* LaunchScreen.storyboard in Resources */,
 				DC62968020A7BCB0006DD1B1 /* Actions.sks in Resources */,
+				DC6296E220A93E9B006DD1B1 /* AIdefense3.png in Resources */,
 				DC6296CC20A8A418006DD1B1 /* defense2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

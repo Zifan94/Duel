@@ -40,13 +40,20 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     var AIStatus:UInt32 = Status.doingNothing
     
     let player = SKSpriteNode(imageNamed: "player")
-    let AI = SKSpriteNode(imageNamed: "AI")
+    let AI = SKSpriteNode(imageNamed: "AIplayer")
     var timeflag:Int = 0
     var normalJumpAroundFlag:Bool = true
     var forwardDashFlag:Bool = false
     var defenseFlag:Bool = false
     
+    var AInormalJumpAroundFlag:Bool = true
+    var AIforwardDashFlag:Bool = false
+    var AIdefenseFlag:Bool = false
+    
     let playerScale = 0.5
+    
+    var playerRemaindist:CGFloat = 0
+    var AIRemaindist:CGFloat = 0
     
     var sleepFlag:Bool = false
     
@@ -146,7 +153,21 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         let other = contact.bodyA.categoryBitMask == PhysicsCategory.Player ? contact.bodyB : contact.bodyA
 
         if other.categoryBitMask == PhysicsCategory.AI {
-            hitAI = true
+//            hitAI = true
+            if PlayerStatus == Status.attacking && (AIStatus == Status.doingNothing) {
+                AIFall()
+            }
+            else if AIStatus == Status.attacking && (PlayerStatus == Status.doingNothing) {
+                PlayerFall()
+            }
+            else if PlayerStatus == Status.attacking && AIStatus == Status.attacking {
+                if playerRemaindist >= AIRemaindist {
+                    AIFall()
+                }
+                else {
+                    PlayerFall()
+                }
+            }
         }
         else if other.categoryBitMask == PhysicsCategory.Ground {
 //            print("## hit ground ##")
@@ -199,7 +220,10 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         print("recognizing right swipe, performing Forward DASH")
         timeflag = 0
         
+        playerRemaindist = 7*8
+        
         activeOneFlag(activeFlag: "forwardDashFlag")
+        AIactiveOneFlag(activeFlag: randomAIFlag())
         
         player.texture = SKTexture(imageNamed: "rightdash")
         player.scale(to: CGSize(width: 153*playerScale,height: 116*playerScale))
@@ -210,7 +234,10 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         print("recognizing left swipe, performing Defense")
         timeflag = 0
         
+        playerRemaindist = 0
+        
         activeOneFlag(activeFlag: "defenseFlag")
+        AIactiveOneFlag(activeFlag: randomAIFlag())
         
         player.texture = SKTexture(imageNamed: "defense1")
         player.scale(to: CGSize(width: 140*playerScale,height: 117*playerScale))
@@ -228,8 +255,11 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
 //
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        checkHitAI()
+        
         updatePlayer()
+        checkHitAI()
+        updateAI()
+        checkHitAI()
     }
     
     func checkHitAI() {
@@ -337,50 +367,67 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             timeflag += 1
         }
         else if timeflag == timeWindow * 0 {
-            player.position.x += dashDistance            //计算player的位置
+//            player.position.x += dashDistance            //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "right")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag += 1
+            playerRemaindist -= abs(dashDistance)
         }
         else if timeflag == timeWindow * 1 {
-            player.position.x += dashDistance              //计算player的位置
+//            player.position.x += dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "right")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag += 1
+            playerRemaindist -= abs(dashDistance)
         }
         else if timeflag == timeWindow * 2 {
-            player.position.x += dashDistance              //计算player的位置
+//            player.position.x += dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "right")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag += 1
+            playerRemaindist -= abs(dashDistance)
         }
         else if timeflag == timeWindow * 3 {
-            player.position.x += dashDistance              //计算player的位置
+//            player.position.x += dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "right")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag += 1
+            playerRemaindist -= abs(dashDistance)
         }
         else if timeflag == timeWindow * 4 {
-            player.position.x += dashDistance              //计算player的位置
+//            player.position.x += dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "right")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag += 1
+            playerRemaindist -= abs(dashDistance)
         }
         else if timeflag == timeWindow * 5 {
-            player.position.x += dashDistance              //计算player的位置
+//            player.position.x += dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "right")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag += 1
+            playerRemaindist -= abs(dashDistance)
         }
         else if timeflag == timeWindow * 6 {
-            player.position.x += dashDistance              //计算player的位置
+//            player.position.x += dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "right")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag += 1
+            playerRemaindist -= abs(dashDistance)
         }
         else if timeflag == timeWindow * 7 {
-            player.position.x += dashDistance              //计算player的位置
+//            player.position.x += dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "right")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag = 0
+            playerRemaindist -= abs(dashDistance)
             
             activeOneFlag(activeFlag: "normalJumpAroundFlag")
             
             player.texture = SKTexture(imageNamed: "player")
             player.scale(to: CGSize(width: 128*playerScale,height: 115*playerScale))
             PlayerStatus = Status.doingNothing
+            playerRemaindist = 0
 //            player.position.y = playableHeight * 0.4 + playableStart
         }
         else {
@@ -396,29 +443,34 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             timeflag += 1
         }
         else if timeflag == timeWindow * 0 {
-            player.position.x -= dashDistance            //计算player的位置
+//            player.position.x -= dashDistance            //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "left")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag += 1
         }
         else if timeflag == timeWindow * 1 {
-            player.position.x -= dashDistance              //计算player的位置
+//            player.position.x -= dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "left")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag += 1
         }
         else if timeflag == timeWindow * 2 {
-            player.position.x -= dashDistance              //计算player的位置
+//            player.position.x -= dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "left")
             timeflag += 1
             player.texture = SKTexture(imageNamed: "defense2")
             player.scale(to: CGSize(width: 138*playerScale,height: 117*playerScale))
 //            player.position.y = playableHeight * 0.4 + playableStart
         }
         else if timeflag == timeWindow * 3 {
-            player.position.x -= dashDistance              //计算player的位置
+//            player.position.x -= dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "left")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag += 1
         }
         else if timeflag == timeWindow * 4 {
-            player.position.x -= dashDistance              //计算player的位置
+//            player.position.x -= dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "left")
 //            player.position.y = playableHeight * 0.4 + playableStart
             
             timeflag += 1
@@ -427,17 +479,20 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
 //            player.position.y = playableHeight * 0.4 + playableStart
         }
         else if timeflag == timeWindow * 5 {
-            player.position.x -= dashDistance              //计算player的位置
+//            player.position.x -= dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "left")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag += 1
         }
         else if timeflag == timeWindow * 6 {
-            player.position.x -= dashDistance              //计算player的位置
+//            player.position.x -= dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "left")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag += 1
         }
         else if timeflag == timeWindow * 7 {
-            player.position.x -= dashDistance              //计算player的位置
+//            player.position.x -= dashDistance              //计算player的位置
+            playerConditionalMove(dist: dashDistance, dict: "left")
 //            player.position.y = playableHeight * 0.4 + playableStart
             timeflag = 0
             
@@ -467,6 +522,254 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         }
         else if activeFlag == "defenseFlag" {
             defenseFlag = true
+        }
+    }
+    
+    func updateAI(){
+        if AInormalJumpAroundFlag == true {
+            AI.texture = SKTexture(imageNamed: "AIplayer")
+            AI.scale(to: CGSize(width: 128*playerScale,height: 115*playerScale))
+            AIStatus = Status.doingNothing
+            AInormalJumpAround()
+        }
+        else if AIforwardDashFlag == true {
+            AI.texture = SKTexture(imageNamed: "AIrightdash")
+            AI.scale(to: CGSize(width: 153*playerScale,height: 116*playerScale))
+            AIStatus = Status.attacking
+            AIforwardDash()
+        }
+        else if AIdefenseFlag == true {
+            AI.texture = SKTexture(imageNamed: "AIdefense1")
+            AI.scale(to: CGSize(width: 140*playerScale,height: 117*playerScale))
+            AIStatus = Status.defensing
+            AIdefense()
+        }
+    }
+    
+    func AInormalJumpAround() {
+        AIStatus = Status.doingNothing
+
+        let deltaX = CGFloat(1.5)
+        let deltaY = CGFloat(1.5)
+        let timeWindow = 8
+        if timeflag % timeWindow != 0 {
+        }
+        else if timeflag == timeWindow * 0 {
+            AI.position.x += deltaX              //计算player的位置
+            AI.position.y += deltaY
+        }
+        else if timeflag == timeWindow * 1 {
+            AI.position.x += deltaX              //计算player的位置
+            AI.position.y -= deltaY
+        }
+        else if timeflag == timeWindow * 2 {
+            AI.position.x -= deltaX              //计算player的位置
+            AI.position.y += deltaY
+        }
+        else if timeflag == timeWindow * 3 {
+            AI.position.x -= deltaX             //计算player的位置
+            AI.position.y -= deltaY
+        }
+            
+            
+        else if timeflag == timeWindow * 4 {
+            AI.position.x -= deltaX              //计算player的位置
+            AI.position.y += deltaY
+        }
+        else if timeflag == timeWindow * 5 {
+            AI.position.x -= deltaX              //计算player的位置
+            AI.position.y -= deltaY
+        }
+        else if timeflag == timeWindow * 6 {
+            AI.position.x += deltaX              //计算player的位置
+            AI.position.y += deltaY
+        }
+        else if timeflag == timeWindow * 7 {
+            AI.position.x += deltaX             //计算player的位置
+            AI.position.y -= deltaY
+        }
+        else {
+        }
+    }
+    
+    func AIforwardDash() {
+        AIStatus = Status.attacking
+        let dashDistance = CGFloat(-8)
+        let timeWindow = 2
+        if timeflag % timeWindow != 0 {
+            //            player.position.y = playableHeight * 0.4 + playableStart
+        }
+        else if timeflag == timeWindow * 0 {
+//            AI.position.x += dashDistance            //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"left")
+            AIRemaindist -= abs(dashDistance)
+        }
+        else if timeflag == timeWindow * 1 {
+//            AI.position.x += dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"left")
+            AIRemaindist -= abs(dashDistance)
+        }
+        else if timeflag == timeWindow * 2 {
+//            AI.position.x += dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"left")
+            AIRemaindist -= abs(dashDistance)
+        }
+        else if timeflag == timeWindow * 3 {
+//            AI.position.x += dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"left")
+            AIRemaindist -= abs(dashDistance)
+        }
+        else if timeflag == timeWindow * 4 {
+//            AI.position.x += dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"left")
+            AIRemaindist -= abs(dashDistance)
+        }
+        else if timeflag == timeWindow * 5 {
+//            AI.position.x += dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"left")
+            AIRemaindist -= abs(dashDistance)
+        }
+        else if timeflag == timeWindow * 6 {
+//            AI.position.x += dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"left")
+            AIRemaindist -= abs(dashDistance)
+        }
+        else if timeflag == timeWindow * 7 {
+//            AI.position.x += dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"left")
+            AIRemaindist -= abs(dashDistance)
+            
+            AIactiveOneFlag(activeFlag: "AInormalJumpAroundFlag")
+            
+            AI.texture = SKTexture(imageNamed: "AIplayer")
+            AI.scale(to: CGSize(width: 128*playerScale,height: 115*playerScale))
+            AIStatus = Status.doingNothing
+            AIRemaindist = 0
+        }
+        else {
+        }
+    }
+    
+    func AIdefense() {
+        let dashDistance = CGFloat(-4)
+        let timeWindow = 2
+        AIStatus = Status.defensing
+        if timeflag % timeWindow != 0 {
+        }
+        else if timeflag == timeWindow * 0 {
+//            AI.position.x -= dashDistance            //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"right")
+        }
+        else if timeflag == timeWindow * 1 {
+//            AI.position.x -= dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"right")
+        }
+        else if timeflag == timeWindow * 2 {
+//            AI.position.x -= dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"right")
+            AI.texture = SKTexture(imageNamed: "AIdefense2")
+            AI.scale(to: CGSize(width: 138*playerScale,height: 117*playerScale))
+        }
+        else if timeflag == timeWindow * 3 {
+//            AI.position.x -= dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"right")
+        }
+        else if timeflag == timeWindow * 4 {
+//            AI.position.x -= dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"right")
+
+            AI.texture = SKTexture(imageNamed: "AIdefense3")
+            AI.scale(to: CGSize(width: 142*playerScale,height: 116*playerScale))
+        }
+        else if timeflag == timeWindow * 5 {
+//            AI.position.x -= dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"right")
+        }
+        else if timeflag == timeWindow * 6 {
+//            AI.position.x -= dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"right")
+        }
+        else if timeflag == timeWindow * 7 {
+//            AI.position.x -= dashDistance              //计算player的位置
+            AIConditionalMove(dist:abs(dashDistance), dict:"right")
+            
+            AIactiveOneFlag(activeFlag: "AInormalJumpAroundFlag")
+            
+            AI.texture = SKTexture(imageNamed: "AIplayer")
+            AI.scale(to: CGSize(width: 128*playerScale,height: 115*playerScale))
+            AIStatus = Status.doingNothing
+        }
+        else {
+        }
+    }
+    
+    
+    func AIactiveOneFlag(activeFlag:String) {
+        AInormalJumpAroundFlag = false
+        AIforwardDashFlag = false
+        AIdefenseFlag = false
+        
+        if activeFlag == "AInormalJumpAroundFlag" {
+            AIRemaindist = 0
+            AInormalJumpAroundFlag = true
+        }
+        else if activeFlag == "AIforwardDashFlag" {
+            AIRemaindist = 7*8
+            AIforwardDashFlag = true
+        }
+        else if activeFlag == "AIdefenseFlag" {
+            AIRemaindist = 0
+            AIdefenseFlag = true
+        }
+    }
+    
+    func randomAIFlag() -> String {
+        let diceFaceCount: UInt32 = 2
+        let randomRoll = Int(arc4random_uniform(diceFaceCount))+1
+        if randomRoll == 1 {
+            return "AIforwardDashFlag"
+        }
+        else if randomRoll == 2 {
+            return  "AIdefenseFlag"
+        }
+        return "AInormalJumpAroundFlag"
+    }
+    
+    func playerConditionalMove(dist:CGFloat, dict:String) {
+        if dict == "left" {
+            if player.position.x - dist <= size.width * 0.05 {
+                player.position.x = size.width * 0.05
+            }
+            else {
+                player.position.x -= dist
+            }
+        }
+        else {
+            if player.position.x + dist >= size.width * (1-0.1) {
+                player.position.x = size.width * (1-0.1)
+            }
+            else {
+                player.position.x += dist
+            }
+        }
+    }
+    
+    func AIConditionalMove(dist:CGFloat, dict:String) {
+        if dict == "left" {
+            if AI.position.x - dist <= size.width * 0.1 {
+                AI.position.x = size.width * 0.1
+            }
+            else {
+                AI.position.x -= dist
+            }
+        }
+        else {
+            if AI.position.x + dist >= size.width * (1-0.05) {
+                AI.position.x = size.width * (1-0.05)
+            }
+            else {
+                AI.position.x += dist
+            }
         }
     }
     
